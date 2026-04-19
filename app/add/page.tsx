@@ -29,6 +29,8 @@ export default function AddStudent() {
 
       const data = await res.json();
 
+      console.log("API Response:", data); // แสดง JSON ใน Console
+
       if (res.ok) {
         alert("บันทึกข้อมูลสำเร็จ!");
         router.push("/students");
