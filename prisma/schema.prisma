@@ -12,5 +12,6 @@ model Student {
   studentId String   @unique
   name      String
   gpa       Float
+  image     String?
   createdAt DateTime @default(now())
 }
