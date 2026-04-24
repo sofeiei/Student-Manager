@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="max-w-5xl mx-auto p-4 flex flex-col md:flex-row justify-between items-center gap-4">
               <h1 className="text-2xl font-bold">Student Manager</h1>
               <div className="flex items-center gap-4">
-                <nav className="flex gap-4">
+                <nav className="flex gap-4 flex-wrap items-center">
                   <Link href="/" className="hover:text-[#ffd6e7] transition-colors">หน้าแรก</Link>
                   <Link href="/students" className="hover:text-[#ffd6e7] transition-colors">รายชื่อนักศึกษา</Link>
                   <Link href="/add" className="hover:text-[#ffd6e7] transition-colors bg-[#ff4d88] px-4 py-1 rounded-full">เพิ่มข้อมูล</Link>
