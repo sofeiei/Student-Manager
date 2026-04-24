@@ -69,28 +69,43 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Student not found" }, { status: 404 });
     }
 
-    const attendanceDate = new Date(date);
+    // Normalize date to start of day
+    const targetDate = new Date(date);
+    const startOfDay = new Date(targetDate);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(targetDate);
+    endOfDay.setHours(23, 59, 59, 999);
 
-    // สร้างหรืออัปเดต attendance
-    const attendance = await prisma.attendance.upsert({
+    // ค้นหา attendance record ในวันนั้น
+    const existingAttendance = await prisma.attendance.findFirst({
       where: {
-        studentId_date: {
-          studentId,
-          date: attendanceDate,
+        studentId,
+        date: {
+          gte: startOfDay,
+          lte: endOfDay,
         },
       },
-      update: {
-        status,
-      },
-      create: {
-        studentId,
-        date: attendanceDate,
-        status,
-      },
-      include: {
-        student: true,
-      },
     });
+
+    let attendance;
+    if (existingAttendance) {
+      // อัปเดต record ที่มีอยู่
+      attendance = await prisma.attendance.update({
+        where: { id: existingAttendance.id },
+        data: { status },
+        include: { student: true },
+      });
+    } else {
+      // สร้าง record ใหม่
+      attendance = await prisma.attendance.create({
+        data: {
+          studentId,
+          date: startOfDay,
+          status,
+        },
+        include: { student: true },
+      });
+    }
 
     return NextResponse.json(attendance);
   } catch (error) {
