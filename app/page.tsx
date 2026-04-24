@@ -31,6 +31,11 @@ export default function Home() {
             ดูรายชื่อทั้งหมด
           </button>
         </Link>
+        <Link href="/attendance">
+          <button className="bg-[#fff0f5] text-[#ff6fa5] font-bold py-3 px-6 rounded-xl hover:bg-[#ff6fa5] hover:text-white transition-all border border-[#ff6fa5] hover:scale-105 transform">
+            📝 เช็คชื่อ
+          </button>
+        </Link>
         <Link href="/add">
           <button className="bg-[#ff4d88] text-white font-bold py-3 px-6 rounded-xl hover:bg-[#ff6fa5] shadow-md active:scale-95 transition-all hover:scale-105 transform">
             เริ่มเพิ่มข้อมูล
