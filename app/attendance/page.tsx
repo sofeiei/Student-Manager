@@ -43,7 +43,13 @@ export default function AttendancePage() {
   const fetchAttendances = () => {
     fetch(`/api/attendance?date=${selectedDate}`)
       .then(res => res.json())
-      .then(data => setAttendances(data))
+      .then(data => {
+        if (Array.isArray(data)) {
+          setAttendances(data);
+        } else {
+          setAttendances([]);
+        }
+      })
       .catch(() => setAttendances([]));
   };
 
@@ -77,6 +83,7 @@ export default function AttendancePage() {
   };
 
   const getAttendanceStatus = (studentId: string) => {
+    if (!Array.isArray(attendances)) return null;
     const record = attendances.find(att => att.studentId === studentId);
     return record ? record.status : null;
   };
@@ -115,16 +122,16 @@ export default function AttendancePage() {
           <p className="text-sm text-[#ff4d88]">นักศึกษาทั้งหมด</p>
         </div>
         <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7] text-center">
-          <p className="text-3xl font-bold text-[#ff6fa5]">{attendances.filter(att => att.status === "Present").length}</p>
+          <p className="text-3xl font-bold text-[#ff6fa5]">{Array.isArray(attendances) ? attendances.filter(att => att.status === "Present").length : 0}</p>
           <p className="text-sm text-[#ff4d88]">มาเรียน</p>
         </div>
         <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7] text-center">
-          <p className="text-3xl font-bold text-[#ff6fa5]">{attendances.filter(att => att.status === "Absent").length}</p>
+          <p className="text-3xl font-bold text-[#ff6fa5]">{Array.isArray(attendances) ? attendances.filter(att => att.status === "Absent").length : 0}</p>
           <p className="text-sm text-[#ff4d88]">ขาดเรียน</p>
         </div>
         <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7] text-center">
           <p className="text-3xl font-bold text-[#ff6fa5]">
-            {students.length > 0 ? Math.round((attendances.filter(att => att.status === "Present").length / students.length) * 100) : 0}%
+            {students.length > 0 ? Math.round(((Array.isArray(attendances) ? attendances.filter(att => att.status === "Present").length : 0) / students.length) * 100) : 0}%
           </p>
           <p className="text-sm text-[#ff4d88]">อัตราการเข้าเรียน</p>
         </div>
