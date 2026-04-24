@@ -20,7 +20,12 @@ export default function Home() {
         รองรับการเพิ่มและดูรายชื่อนักศึกษา
       </p>
       
-      <div className="flex gap-4 mt-4 animate-slide-up-delayed">
+      <div className="flex flex-col sm:flex-row gap-4 mt-4 animate-slide-up-delayed">
+        <Link href="/dashboard">
+          <button className="bg-[#fff0f5] text-[#ff6fa5] font-bold py-3 px-6 rounded-xl hover:bg-[#ff6fa5] hover:text-white transition-all border border-[#ff6fa5] hover:scale-105 transform">
+            📊 ดูแดชบอร์ด
+          </button>
+        </Link>
         <Link href="/students">
           <button className="bg-[#ffd6e7] text-[#ff6fa5] font-bold py-3 px-6 rounded-xl hover:bg-[#ff6fa5] hover:text-white transition-all border border-[#ff6fa5] hover:scale-105 transform">
             ดูรายชื่อทั้งหมด
