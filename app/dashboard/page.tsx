@@ -24,7 +24,7 @@ export default function Dashboard() {
       .catch(() => setIsLoading(false));
   }, []);
 
-  if (isLoading) return <div className="text-center mt-20 text-[#ff6fa5] font-bold animate-pulse">กำลังโหลดข้อมูล...</div>;
+  if (isLoading) return <div className="text-center mt-20 text-[#7c3aed] font-bold animate-pulse">กำลังโหลดข้อมูล...</div>;
 
   // คำนวณสถิติ
   const totalStudents = students.length;
@@ -61,52 +61,52 @@ export default function Dashboard() {
 
   return (
     <div className="mt-4">
-      <div className="flex justify-between items-end mb-8 border-b border-[#ffd6e7] pb-4">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4 border-b border-[#ede9fe] pb-4">
         <div>
-          <h2 className="text-3xl font-extrabold text-[#ff6fa5]">📊 แดชบอร์ดวิเคราะห์</h2>
-          <p className="text-[#ff4d88] mt-1 font-medium">ข้อมูลเชิงลึกและแนวโน้มผลการเรียน</p>
+          <h2 className="text-3xl font-extrabold text-[#5b21b6]">📊 แดชบอร์ดวิเคราะห์</h2>
+          <p className="text-[#7c3aed] mt-1 font-medium">ข้อมูลเชิงลึกและแนวโน้มผลการเรียน</p>
         </div>
       </div>
 
       {/* สถิติหลัก */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7] text-center">
-          <p className="text-3xl font-bold text-[#ff6fa5]">{totalStudents}</p>
-          <p className="text-sm text-[#ff4d88]">นักศึกษาทั้งหมด</p>
+        <div className="bg-[#f3e8ff] p-6 rounded-3xl border border-[#d8b4fe] text-center shadow-sm">
+          <p className="text-3xl font-bold text-[#5b21b6]">{totalStudents}</p>
+          <p className="text-sm text-[#7c3aed]">นักศึกษาทั้งหมด</p>
         </div>
-        <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7] text-center">
-          <p className="text-3xl font-bold text-[#ff6fa5]">{averageGPA.toFixed(2)}</p>
-          <p className="text-sm text-[#ff4d88]">เกรดเฉลี่ยรวม</p>
+        <div className="bg-[#f3e8ff] p-6 rounded-3xl border border-[#d8b4fe] text-center shadow-sm">
+          <p className="text-3xl font-bold text-[#5b21b6]">{averageGPA.toFixed(2)}</p>
+          <p className="text-sm text-[#7c3aed]">เกรดเฉลี่ยรวม</p>
         </div>
-        <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7] text-center">
-          <p className="text-3xl font-bold text-[#ff6fa5]">{highPerformers}</p>
-          <p className="text-sm text-[#ff4d88]">นักศึกษาดีเยี่ยม (≥3.5)</p>
+        <div className="bg-[#f3e8ff] p-6 rounded-3xl border border-[#d8b4fe] text-center shadow-sm">
+          <p className="text-3xl font-bold text-[#5b21b6]">{highPerformers}</p>
+          <p className="text-sm text-[#7c3aed]">นักศึกษาดีเยี่ยม (≥3.5)</p>
         </div>
-        <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7] text-center">
-          <p className="text-3xl font-bold text-[#ff6fa5]">{lowPerformers}</p>
-          <p className="text-sm text-[#ff4d88]">นักศึกษาต้องปรับปรุง (&lt;2.0)</p>
+        <div className="bg-[#f3e8ff] p-6 rounded-3xl border border-[#d8b4fe] text-center shadow-sm">
+          <p className="text-3xl font-bold text-[#5b21b6]">{lowPerformers}</p>
+          <p className="text-sm text-[#7c3aed]">นักศึกษาต้องปรับปรุง (&lt;2.0)</p>
         </div>
       </div>
 
       {/* กราฟหลัก */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* กราฟ GPA Distribution */}
-        <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7]">
-          <h3 className="text-xl font-bold text-[#ff6fa5] mb-4">📈 การกระจายเกรด GPA</h3>
+        <div className="bg-[#f3e8ff] p-6 rounded-3xl border border-[#d8b4fe] shadow-sm">
+          <h3 className="text-xl font-bold text-[#5b21b6] mb-4">📈 การกระจายเกรด GPA</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={gpaRanges}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="range" />
-              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" stroke="#d8b4fe" />
+              <XAxis dataKey="range" stroke="#7c3aed" />
+              <YAxis stroke="#7c3aed" />
               <Tooltip />
-              <Bar dataKey="count" fill="#ff6fa5" />
+              <Bar dataKey="count" fill="#7c3aed" />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         {/* กราฟ Performance Overview */}
-        <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7]">
-          <h3 className="text-xl font-bold text-[#ff6fa5] mb-4">🎯 ภาพรวมผลการเรียน</h3>
+        <div className="bg-[#f3e8ff] p-6 rounded-3xl border border-[#d8b4fe] shadow-sm">
+          <h3 className="text-xl font-bold text-[#5b21b6] mb-4">🎯 ภาพรวมผลการเรียน</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -116,7 +116,7 @@ export default function Dashboard() {
                 labelLine={false}
                 label={({ name, percent }) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
                 outerRadius={80}
-                fill="#8884d8"
+                fill="#7c3aed"
                 dataKey="value"
               >
                 {performanceData.map((entry, index) => (
@@ -130,37 +130,37 @@ export default function Dashboard() {
       </div>
 
       {/* กราฟแนวโน้ม */}
-      <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7] mb-8">
-        <h3 className="text-xl font-bold text-[#ff6fa5] mb-4">📊 แนวโน้มเกรดเฉลี่ย</h3>
+      <div className="bg-[#f3e8ff] p-6 rounded-3xl border border-[#d8b4fe] mb-8 shadow-sm">
+        <h3 className="text-xl font-bold text-[#5b21b6] mb-4">📊 แนวโน้มเกรดเฉลี่ย</h3>
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={gpaTrendData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis domain={[0, 4]} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#d8b4fe" />
+            <XAxis dataKey="month" stroke="#7c3aed" />
+            <YAxis domain={[0, 4]} stroke="#7c3aed" />
             <Tooltip />
-            <Area type="monotone" dataKey="gpa" stroke="#ff6fa5" fill="#ffd6e7" />
+            <Area type="monotone" dataKey="gpa" stroke="#7c3aed" fill="#dde1ff" />
           </AreaChart>
         </ResponsiveContainer>
       </div>
 
       {/* ข้อมูลเพิ่มเติม */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7]">
-          <h4 className="text-lg font-bold text-[#ff6fa5] mb-2">🏆 นักศึกษาดีเด่น</h4>
-          <p className="text-2xl font-bold text-[#ff4d88]">{excellentStudents}</p>
-          <p className="text-sm text-[#ff4d88]">นักศึกษาที่มี GPA ≥ 3.75</p>
+        <div className="bg-[#f3e8ff] p-6 rounded-3xl border border-[#d8b4fe] shadow-sm">
+          <h4 className="text-lg font-bold text-[#5b21b6] mb-2">🏆 นักศึกษาดีเด่น</h4>
+          <p className="text-2xl font-bold text-[#7c3aed]">{excellentStudents}</p>
+          <p className="text-sm text-[#7c3aed]">นักศึกษาที่มี GPA ≥ 3.75</p>
         </div>
 
-        <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7]">
-          <h4 className="text-lg font-bold text-[#ff6fa5] mb-2">📈 อัตราการปรับปรุง</h4>
-          <p className="text-2xl font-bold text-[#ff4d88]">+12%</p>
-          <p className="text-sm text-[#ff4d88]">เทียบกับเดือนที่แล้ว</p>
+        <div className="bg-[#f3e8ff] p-6 rounded-3xl border border-[#d8b4fe] shadow-sm">
+          <h4 className="text-lg font-bold text-[#5b21b6] mb-2">📈 อัตราการปรับปรุง</h4>
+          <p className="text-2xl font-bold text-[#7c3aed]">+12%</p>
+          <p className="text-sm text-[#7c3aed]">เทียบกับเดือนที่แล้ว</p>
         </div>
 
-        <div className="bg-[#fff0f5] p-6 rounded-3xl border border-[#ffd6e7]">
-          <h4 className="text-lg font-bold text-[#ff6fa5] mb-2">🎯 เป้าหมาย</h4>
-          <p className="text-2xl font-bold text-[#ff4d88]">85%</p>
-          <p className="text-sm text-[#ff4d88]">นักศึกษาที่มี GPA ≥ 3.0</p>
+        <div className="bg-[#f3e8ff] p-6 rounded-3xl border border-[#d8b4fe] shadow-sm">
+          <h4 className="text-lg font-bold text-[#5b21b6] mb-2">🎯 เป้าหมาย</h4>
+          <p className="text-2xl font-bold text-[#7c3aed]">85%</p>
+          <p className="text-sm text-[#7c3aed]">นักศึกษาที่มี GPA ≥ 3.0</p>
         </div>
       </div>
     </div>

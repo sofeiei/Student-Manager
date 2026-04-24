@@ -12,18 +12,18 @@ export const metadata: Metadata = { title: "Student Manager" };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="th">
-      <body className={`${notoSansThai.className} bg-[#fff0f5] flex flex-col min-h-screen`}>
+      <body className={`${notoSansThai.className} bg-[#f5f0ff] flex flex-col min-h-screen`}>
         <ThemeProvider>
           {/* Navbar & Header */}
-          <header className="bg-[#ff6fa5] text-white shadow-md">
+          <header className="bg-gradient-to-r from-[#8b5cf6] to-[#7c3aed] text-white shadow-xl">
             <div className="max-w-5xl mx-auto p-4 flex flex-col md:flex-row justify-between items-center gap-4">
-              <h1 className="text-2xl font-bold">Student Manager</h1>
+              <h1 className="text-2xl font-bold tracking-tight">Student Manager</h1>
               <div className="flex items-center gap-4">
                 <nav className="flex gap-4 flex-wrap items-center">
-                  <Link href="/" className="hover:text-[#ffd6e7] transition-colors">หน้าแรก</Link>
-                  <Link href="/dashboard" className="hover:text-[#ffd6e7] transition-colors">📊 แดชบอร์ด</Link>
-                  <Link href="/students" className="hover:text-[#ffd6e7] transition-colors">รายชื่อนักศึกษา</Link>
-                  <Link href="/add" className="hover:text-[#ffd6e7] transition-colors bg-[#ff4d88] px-4 py-1 rounded-full">เพิ่มข้อมูล</Link>
+                  <Link href="/" className="hover:text-[#d8b4fe] transition-colors">หน้าแรก</Link>
+                  <Link href="/dashboard" className="hover:text-[#d8b4fe] transition-colors">📊 แดชบอร์ด</Link>
+                  <Link href="/students" className="hover:text-[#d8b4fe] transition-colors">รายชื่อนักศึกษา</Link>
+                  <Link href="/add" className="hover:text-white transition-colors bg-white/20 px-4 py-1 rounded-full border border-white/30">เพิ่มข้อมูล</Link>
                 </nav>
                 <ThemeToggle />
               </div>
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </main>
 
           {/* Footer */}
-          <footer className="bg-[#ff6fa5] text-white text-center p-4 mt-auto text-sm">
+          <footer className="bg-[#7c3aed] text-white text-center p-4 mt-auto text-sm">
             <p>&copy; 2026 Student Manager Project. All rights reserved.</p>
           </footer>
         </ThemeProvider>

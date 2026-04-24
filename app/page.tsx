@@ -15,24 +15,24 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center text-center mt-10 md:mt-20 gap-6 animate-fade-in">
-      <h2 className="text-4xl md:text-5xl font-extrabold text-[#ff6fa5] leading-tight animate-bounce-in">ระบบจัดการนักศึกษา</h2>
-      <p className="text-[#ff4d88] max-w-lg text-lg animate-slide-up">
-        รองรับการเพิ่มและดูรายชื่อนักศึกษา
+      <h2 className="text-4xl md:text-5xl font-extrabold text-[#5b21b6] leading-tight animate-bounce-in">ระบบจัดการนักศึกษา</h2>
+      <p className="text-[#7c3aed] max-w-lg text-lg animate-slide-up">
+        รองรับการเพิ่มและดูรายชื่อนักศึกษาในสไตล์สีม่วงอ่อน
       </p>
       
       <div className="flex flex-col sm:flex-row gap-4 mt-4 animate-slide-up-delayed">
         <Link href="/dashboard">
-          <button className="bg-[#fff0f5] text-[#ff6fa5] font-bold py-3 px-6 rounded-xl hover:bg-[#ff6fa5] hover:text-white transition-all border border-[#ff6fa5] hover:scale-105 transform">
+          <button className="bg-[#ede9fe] text-[#5b21b6] font-bold py-3 px-6 rounded-2xl hover:bg-[#8b5cf6] hover:text-white transition-all border border-[#c4b5fd] hover:scale-105 transform shadow-sm">
             📊 ดูแดชบอร์ด
           </button>
         </Link>
         <Link href="/students">
-          <button className="bg-[#ffd6e7] text-[#ff6fa5] font-bold py-3 px-6 rounded-xl hover:bg-[#ff6fa5] hover:text-white transition-all border border-[#ff6fa5] hover:scale-105 transform">
+          <button className="bg-[#ede9fe] text-[#5b21b6] font-bold py-3 px-6 rounded-2xl hover:bg-[#8b5cf6] hover:text-white transition-all border border-[#c4b5fd] hover:scale-105 transform shadow-sm">
             ดูรายชื่อทั้งหมด
           </button>
         </Link>
         <Link href="/add">
-          <button className="bg-[#ff4d88] text-white font-bold py-3 px-6 rounded-xl hover:bg-[#ff6fa5] shadow-md active:scale-95 transition-all hover:scale-105 transform">
+          <button className="bg-[#8b5cf6] text-white font-bold py-3 px-6 rounded-2xl hover:bg-[#7c3aed] shadow-lg active:scale-95 transition-all hover:scale-105 transform">
             เริ่มเพิ่มข้อมูล
           </button>
         </Link>

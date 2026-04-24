@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { studentSchema } from "@/lib/studentSchema";
 
 export default function EditStudent() {
   const router = useRouter();
@@ -49,20 +50,26 @@ export default function EditStudent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (formData.studentId.length !== 10) return setError("รหัสนักศึกษาต้องมี 10 หลัก");
-    if (formData.name.trim().length < 2) return setError("กรุณากรอกชื่อ-นามสกุลให้ครบถ้วน");
-    const gpaNum = parseFloat(formData.gpa);
-    if (isNaN(gpaNum) || gpaNum < 0 || gpaNum > 4) return setError("เกรดเฉลี่ยต้องอยู่ระหว่าง 0.00 - 4.00");
 
-    setError(""); 
+    const result = studentSchema.safeParse({
+      ...formData,
+      gpa: formData.gpa,
+      image: formData.image || undefined,
+    });
+
+    if (!result.success) {
+      setError(result.error.issues[0]?.message || "ข้อมูลไม่ถูกต้อง");
+      return;
+    }
+
+    setError("");
     setIsLoading(true);
 
     try {
       const res = await fetch(`/api/students/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, gpa: gpaNum }),
+        body: JSON.stringify(result.data),
       });
 
       const data = await res.json();
@@ -80,14 +87,14 @@ export default function EditStudent() {
     }
   };
 
-  if (isFetching) return <div className="text-center mt-20 font-bold text-[#ff6fa5] animate-pulse">กำลังโหลดข้อมูล...</div>;
+  if (isFetching) return <div className="text-center mt-20 font-bold text-[#7c3aed] animate-pulse">กำลังโหลดข้อมูล...</div>;
 
   return (
-    <div className="max-w-md mx-auto bg-[#fff0f5] p-8 rounded-3xl shadow-sm border border-[#ffd6e7] mt-10 relative">
-      <h2 className="text-3xl font-extrabold text-[#ff6fa5] mb-8 text-center">แก้ไขข้อมูล</h2>
+    <div className="max-w-md mx-auto bg-[#f5f0ff] p-8 rounded-3xl shadow-xl border border-[#e9d5ff] mt-10 relative">
+      <h2 className="text-3xl font-extrabold text-[#5b21b6] mb-8 text-center">แก้ไขข้อมูล</h2>
       
       {error && (
-        <div className="bg-[#ffd6e7] text-[#ff4d88] p-4 rounded-2xl mb-6 text-sm font-bold text-center border border-[#ff6fa5]">
+        <div className="bg-[#f8d5ff] text-[#6d28d9] p-4 rounded-2xl mb-6 text-sm font-bold text-center border border-[#d8b4fe]">
           * {error}
         </div>
       )}
@@ -131,10 +138,10 @@ export default function EditStudent() {
             type="file" 
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full p-4 bg-white rounded-2xl mt-1 outline-none focus:ring-2 focus:ring-[#ff6fa5] transition-all border border-[#ffd6e7]" 
+            className="w-full p-4 bg-white rounded-2xl mt-1 outline-none focus:ring-2 focus:ring-[#8b5cf6] transition-all border border-[#d8b4fe]" 
           />
           {imagePreview && (
-            <img src={imagePreview} alt="Preview" className="mt-2 w-20 h-20 object-cover rounded-full border-2 border-[#ff6fa5]" />
+            <img src={imagePreview} alt="Preview" className="mt-2 w-20 h-20 object-cover rounded-full border-2 border-[#7c3aed]" />
           )}
         </div>
 
@@ -142,7 +149,7 @@ export default function EditStudent() {
           <button 
             type="button" 
             onClick={() => router.push("/students")}
-            className="flex-1 bg-[#ffd6e7] text-[#ff6fa5] font-bold py-4 rounded-2xl hover:bg-[#ff6fa5] hover:text-white transition-all border border-[#ff6fa5]"
+            className="flex-1 bg-[#ede9fe] text-[#5b21b6] font-bold py-4 rounded-2xl hover:bg-[#d8b4fe] hover:text-[#3b076b] transition-all border border-[#c4b5fd]"
           >
             ยกเลิก
           </button>
@@ -150,7 +157,7 @@ export default function EditStudent() {
             type="submit" 
             disabled={isLoading}
             className={`flex-1 text-white font-bold py-4 rounded-2xl shadow-lg transition-all ${
-              isLoading ? "bg-[#ff4d88]" : "bg-[#ff4d88] hover:bg-[#ff6fa5] active:scale-[0.98]"
+              isLoading ? "bg-[#7c3aed]" : "bg-[#8b5cf6] hover:bg-[#7c3aed] active:scale-[0.98]"
             }`}
           >
             {isLoading ? "กำลังบันทึก..." : "อัปเดตข้อมูล"}

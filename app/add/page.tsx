@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { studentSchema } from "@/lib/studentSchema";
 
 export default function AddStudent() {
   const router = useRouter();
@@ -24,32 +25,37 @@ export default function AddStudent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // 🛑 ตรวจสอบข้อมูลฝั่ง Frontend (คำสั่งอาจารย์ข้อ 5)
-    if (formData.studentId.length !== 10) return setError("รหัสนักศึกษาต้องมี 10 หลัก");
-    if (formData.name.trim().length < 2) return setError("กรุณากรอกชื่อ-นามสกุลให้ครบถ้วน");
-    const gpaNum = parseFloat(formData.gpa);
-    if (isNaN(gpaNum) || gpaNum < 0 || gpaNum > 4) return setError("เกรดเฉลี่ยต้องอยู่ระหว่าง 0.00 - 4.00");
 
-    setError(""); 
+    const result = studentSchema.safeParse({
+      ...formData,
+      gpa: formData.gpa,
+      image: formData.image || undefined,
+    });
+
+    if (!result.success) {
+      setError(result.error.issues[0]?.message || "ข้อมูลไม่ถูกต้อง");
+      return;
+    }
+
+    setError("");
     setIsLoading(true);
 
     try {
       const res = await fetch("/api/students", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, gpa: gpaNum }), // แปลงเกรดเป็นตัวเลขก่อนส่ง
+        body: JSON.stringify(result.data),
       });
 
       const data = await res.json();
 
-      console.log("API Response:", data); // แสดง JSON ใน Console
+      console.log("API Response:", data);
 
       if (res.ok) {
         alert("บันทึกข้อมูลสำเร็จ!");
         router.push("/students");
       } else {
-        setError(JSON.stringify(data, null, 2)); // แสดง JSON 4000 บนหน้าเว็บ
+        setError(data.error || "เกิดข้อผิดพลาด");
       }
     } catch (err) {
       setError("ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้");
@@ -59,11 +65,11 @@ export default function AddStudent() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-[#fff0f5] p-8 rounded-3xl shadow-sm border border-[#ffd6e7] mt-10 relative animate-fade-in">
-      <h2 className="text-3xl font-extrabold text-[#ff6fa5] mb-8 text-center animate-bounce-in">เพิ่มข้อมูลนักศึกษา</h2>
+    <div className="max-w-md mx-auto bg-[#f5f0ff] p-8 rounded-3xl shadow-xl border border-[#e9d5ff] mt-10 relative animate-fade-in">
+      <h2 className="text-3xl font-extrabold text-[#5b21b6] mb-8 text-center animate-bounce-in">เพิ่มข้อมูลนักศึกษา</h2>
       
       {error && (
-        <div className="bg-[#ffd6e7] text-[#ff4d88] p-4 rounded-2xl mb-6 text-sm font-bold text-center border border-[#ff6fa5] animate-shake">
+        <div className="bg-[#f8d5ff] text-[#6d28d9] p-4 rounded-2xl mb-6 text-sm font-bold text-center border border-[#d8b4fe] animate-shake">
           * {error}
         </div>
       )}
@@ -121,7 +127,7 @@ export default function AddStudent() {
           <button 
             type="button" 
             onClick={() => router.push("/")}
-            className="flex-1 bg-[#ffd6e7] text-[#ff6fa5] font-bold py-4 rounded-2xl hover:bg-[#ff6fa5] hover:text-white transition-all border border-[#ff6fa5]"
+            className="flex-1 bg-[#ede9fe] text-[#5b21b6] font-bold py-4 rounded-2xl hover:bg-[#d8b4fe] transition-all border border-[#c4b5fd]"
           >
             ยกเลิก
           </button>
@@ -129,7 +135,7 @@ export default function AddStudent() {
             type="submit" 
             disabled={isLoading}
             className={`flex-1 text-white font-bold py-4 rounded-2xl shadow-lg transition-all ${
-              isLoading ? "bg-[#ff4d88]" : "bg-[#ff4d88] hover:bg-[#ff6fa5] active:scale-[0.98]"
+              isLoading ? "bg-[#7c3aed]" : "bg-[#8b5cf6] hover:bg-[#7c3aed] active:scale-[0.98]"
             }`}
           >
             {isLoading ? "กำลังบันทึก..." : "บันทึกข้อมูล"}
